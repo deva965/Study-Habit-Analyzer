@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Study Habit Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>🧠 Study Habit Analyzer</h1>
+    <p class="subtitle">Track your study behavior & improve productivity</p>
+
+    <!-- Study Log -->
+    <div class="card">
+      <h2>📘 Daily Study Log</h2>
+      <input type="date" id="date">
+      <input type="text" id="subject" placeholder="Subject">
+      <input type="number" id="hours" placeholder="Hours Studied">
+      <select id="focus">
+        <option value="5">Excellent Focus</option>
+        <option value="4">Good Focus</option>
+        <option value="3">Average Focus</option>
+        <option value="2">Poor Focus</option>
+        <option value="1">Very Poor Focus</option>
+      </select>
+      <button onclick="addLog()">Add Log</button>
+    </div>
+
+    <!-- Analysis -->
+    <div class="card">
+      <h2>📊 Analysis</h2>
+      <p><strong>Productivity Score:</strong> <span id="score">0</span>/100</p>
+      <p><strong>Weak Subject:</strong> <span id="weak">-</span></p>
+      <p id="burnout" class="warning"></p>
+    </div>
+
+    <!-- Weekly Report -->
+    <div class="card">
+      <h2>📅 Weekly Report</h2>
+      <ul id="report"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
