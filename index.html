@@ -7,41 +7,75 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
+  <header>
     <h1>🧠 Study Habit Analyzer</h1>
-    <p class="subtitle">Track your study behavior & improve productivity</p>
+    <button onclick="toggleTheme()">🌙</button>
+  </header>
 
-    <!-- Study Log -->
-    <div class="card">
-      <h2>📘 Daily Study Log</h2>
-      <input type="date" id="date">
-      <input type="text" id="subject" placeholder="Subject">
-      <input type="number" id="hours" placeholder="Hours Studied">
-      <select id="focus">
-        <option value="5">Excellent Focus</option>
-        <option value="4">Good Focus</option>
-        <option value="3">Average Focus</option>
-        <option value="2">Poor Focus</option>
-        <option value="1">Very Poor Focus</option>
-      </select>
-      <button onclick="addLog()">Add Log</button>
+  <!-- Study Input -->
+  <div class="card">
+    <h2>📘 Daily Study Log</h2>
+    <input type="date" id="date">
+    <input type="text" id="subject" placeholder="Subject">
+    <input type="number" id="hours" placeholder="Hours Studied">
+    
+    <select id="focus">
+      <option value="5">🔥 Excellent Focus</option>
+      <option value="4">🙂 Good Focus</option>
+      <option value="3">😐 Average Focus</option>
+      <option value="2">😴 Low Focus</option>
+      <option value="1">😫 Very Poor Focus</option>
+    </select>
+
+    <select id="mood">
+      <option value="Happy">😊 Happy</option>
+      <option value="Normal">😐 Normal</option>
+      <option value="Stressed">😖 Stressed</option>
+    </select>
+
+    <button onclick="addLog()">Add Entry</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="card stats">
+    <div>
+      <h3>📊 Productivity</h3>
+      <span id="score">0</span>/100
     </div>
-
-    <!-- Analysis -->
-    <div class="card">
-      <h2>📊 Analysis</h2>
-      <p><strong>Productivity Score:</strong> <span id="score">0</span>/100</p>
-      <p><strong>Weak Subject:</strong> <span id="weak">-</span></p>
-      <p id="burnout" class="warning"></p>
-    </div>
-
-    <!-- Weekly Report -->
-    <div class="card">
-      <h2>📅 Weekly Report</h2>
-      <ul id="report"></ul>
+    <div>
+      <h3>🔥 Streak</h3>
+      <span id="streak">0</span> days
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Goal -->
+  <div class="card">
+    <h2>🎯 Daily Goal (5 hrs)</h2>
+    <div class="progress">
+      <div id="progressBar"></div>
+    </div>
+  </div>
+
+  <!-- Insights -->
+  <div class="card">
+    <h2>🧠 Insights</h2>
+    <p><b>Weak Subject:</b> <span id="weak">-</span></p>
+    <p id="burnout" class="warning"></p>
+    <p id="suggestion" class="suggestion"></p>
+  </div>
+
+  <!-- Weekly Report -->
+  <div class="card">
+    <h2>📅 Recent Logs</h2>
+    <ul id="report"></ul>
+  </div>
+
+  <button class="danger" onclick="clearData()">Clear All Data</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
+
+ 
