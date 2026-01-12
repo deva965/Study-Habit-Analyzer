@@ -1,61 +1,82 @@
-let logs = JSON.parse(localStorage.getItem("studyLogs")) || [];
+let logs = JSON.parse(localStorage.getItem("logs")) || [];
+let theme = localStorage.getItem("theme");
+
+if (theme === "dark") document.body.classList.add("dark");
+
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
 
 function addLog() {
-  const date = document.getElementById("date").value;
-  const subject = document.getElementById("subject").value;
-  const hours = Number(document.getElementById("hours").value);
-  const focus = Number(document.getElementById("focus").value);
+  const date = dateInput.value;
+  const subject = subjectInput.value;
+  const hours = +hoursInput.value;
+  const focus = +focus.value;
+  const mood = mood.value;
 
-  if (!date || !subject || !hours) {
-    alert("Please fill all fields");
-    return;
-  }
+  if (!date || !subject || !hours) return alert("Fill all fields");
 
-  logs.push({ date, subject, hours, focus });
-  localStorage.setItem("studyLogs", JSON.stringify(logs));
+  logs.push({ date, subject, hours, focus, mood });
+  localStorage.setItem("logs", JSON.stringify(logs));
 
   analyze();
-  weeklyReport();
+  report();
 }
 
 function analyze() {
-  if (logs.length === 0) return;
+  let total = 0, focusSum = 0, map = {}, streak = 1;
 
-  let totalHours = 0;
-  let focusSum = 0;
-  let subjectMap = {};
-  let burnoutCheck = 0;
-
-  logs.forEach(log => {
-    totalHours += log.hours;
-    focusSum += log.focus;
-
-    subjectMap[log.subject] = (subjectMap[log.subject] || 0) + log.hours;
-    if (log.hours > 6) burnoutCheck++;
+  logs.forEach(l => {
+    total += l.hours;
+    focusSum += l.focus;
+    map[l.subject] = (map[l.subject] || 0) + l.hours;
   });
 
-  let productivity = Math.min(100, Math.round((totalHours * (focusSum / logs.length)) * 2));
-  document.getElementById("score").innerText = productivity;
+  score.innerText = Math.min(100, total * (focusSum / logs.length));
+  weak.innerText = Object.keys(map).sort((a,b)=>map[a]-map[b])[0];
 
-  let weakSubject = Object.keys(subjectMap)
-    .reduce((a, b) => subjectMap[a] < subjectMap[b] ? a : b);
+  progressBar.style.width = Math.min(100, (total / 5) * 100) + "%";
 
-  document.getElementById("weak").innerText = weakSubject;
+  if (logs.slice(-3).every(l => l.hours > 6)) {
+    burnout.innerText = "⚠ Burnout Risk! Take breaks.";
+  } else burnout.innerText = "";
 
-  document.getElementById("burnout").innerText =
-    burnoutCheck >= 3 ? "⚠ Burnout Warning: Take Rest!" : "";
+  suggestion.innerText =
+    focusSum / logs.length < 3
+      ? "💡 Try Pomodoro or short breaks."
+      : "✅ Keep up the good work!";
 }
 
-function weeklyReport() {
-  const report = document.getElementById("report");
-  report.innerHTML = "";
-
-  logs.slice(-7).forEach(log => {
-    const li = document.createElement("li");
-    li.textContent = `${log.date} - ${log.subject} (${log.hours} hrs)`;
-    report.appendChild(li);
+function report() {
+  reportList.innerHTML = "";
+  logs.slice(-5).forEach(l => {
+    reportList.innerHTML += `<li>${l.date} • ${l.subject} • ${l.hours}h</li>`;
   });
 }
+
+function clearData() {
+  if (confirm("Delete all data?")) {
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+const dateInput = document.getElementById("date");
+const subjectInput = document.getElementById("subject");
+const hoursInput = document.getElementById("hours");
+const focus = document.getElementById("focus");
+const mood = document.getElementById("mood");
+
+const score = document.getElementById("score");
+const weak = document.getElementById("weak");
+const burnout = document.getElementById("burnout");
+const suggestion = document.getElementById("suggestion");
+const progressBar = document.getElementById("progressBar");
+const reportList = document.getElementById("report");
 
 analyze();
-weeklyReport();
+report();
+
