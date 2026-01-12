@@ -1,22 +1,22 @@
 :root {
-  --bg: linear-gradient(135deg, #667eea, #764ba2);
+  --bg: linear-gradient(135deg,#667eea,#764ba2);
   --card: rgba(255,255,255,0.15);
-  --text: #fff;
+  --text: white;
 }
 
 body.dark {
-  --bg: linear-gradient(135deg, #0f2027, #203a43);
+  --bg: linear-gradient(135deg,#0f2027,#203a43);
 }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Segoe UI, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
 .container {
-  max-width: 650px;
+  max-width: 720px;
   margin: auto;
   padding: 20px;
 }
@@ -29,13 +29,13 @@ header {
 
 .card {
   background: var(--card);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   padding: 15px;
   border-radius: 15px;
   margin-bottom: 15px;
 }
 
-.stats {
+.grid {
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -51,18 +51,13 @@ input, select, button {
 
 button {
   background: #38bdf8;
-  color: black;
   font-weight: bold;
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
 .progress {
-  background: #ddd;
   height: 10px;
+  background: #ccc;
   border-radius: 5px;
 }
 
@@ -74,16 +69,13 @@ button:hover {
 }
 
 .warning {
-  color: #ffb703;
+  color: #facc15;
   font-weight: bold;
-}
-
-.suggestion {
-  color: #a7f3d0;
 }
 
 .danger {
   background: #ef4444;
 }
+
 
  
